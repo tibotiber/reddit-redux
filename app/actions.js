@@ -35,11 +35,30 @@ function receivePosts (subreddit, json) {
   }
 }
 
-export function fetchPosts (subreddit) {
+function fetchPosts (subreddit) {
   return function (dispatch) {
     dispatch(requestPosts(subreddit))
     return fetch(`https://www.reddit.com/r/${subreddit}.json`)
       .then(res => res.json())
       .then(json => dispatch(receivePosts(subreddit, json)))
+  }
+}
+
+function shouldFetchPosts (state, subreddit) {
+  const posts = state.postsBySubreddit[subreddit]
+  if (!posts) {
+    return true
+  } else if (posts.isFetching) {
+    return false
+  } else {
+    return posts.didInvalidate
+  }
+}
+
+export function fetchPostsIfNeeded (subreddit) {
+  return function (dispatch, getState) {
+    if (shouldFetchPosts(getState(), subreddit)) {
+      return dispatch(fetchPosts(subreddit))
+    }
   }
 }

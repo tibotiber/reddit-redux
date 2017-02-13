@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { SELECT_SUBREDDIT, INVALIDATE_SUBREDDIT, REQUEST_POSTS, RECEIVE_POSTS } from './actions'
 
-function selectSubreddit (state = 'reactjs', action) {
+function selectedSubreddit (state = 'reactjs', action) {
   switch (action.type) {
     case SELECT_SUBREDDIT:
       return action.subreddit
@@ -51,6 +51,6 @@ function postsBySubreddit (state = {}, action) {
 }
 
 export default combineReducers({
-  selectSubreddit,
+  selectedSubreddit,
   postsBySubreddit
 })
