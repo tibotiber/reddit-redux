@@ -5,4 +5,5 @@ app:
     - '3000:3000'
   volumes:
     - .:/usr/src/app/:rw
+    - /private/$TMPDIR/webpack-progress:/usr/src/app/webpack-progress:rw
   command: bash -c "npm install && npm start"
